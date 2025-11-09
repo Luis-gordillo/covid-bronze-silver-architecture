@@ -1,0 +1,30 @@
+dataset_name: COVID-19 Bronze–Silver Architecture (Mexico)
+created_by: Luis Francisco Gordillo Salinas
+version: 1.0
+created_date: 2025-11-08
+sources:
+  - name: Datos abiertos COVID-19 (Secretaría de Salud)
+    url: https://www.gob.mx/salud/documentos/datos-abiertos-152127
+    update_frequency: mensual
+  - name: Catálogos SSA
+    url: https://www.gob.mx/salud/documentos/datos-abiertos-152127
+transformations:
+  - bronze_to_silver.py
+  - imputaciones de fechas y codificación de valores
+output_tables:
+  - historicos.csv
+  - dim_clasificacion_final_covid.csv
+  - dim_clasificacion_final_flu.csv
+  - dim_entidad.csv
+  - dim_municipio.csv
+  - dim_nacionalidad.csv
+  - dim_opcion.csv
+  - dim_origen.csv
+  - dim_paises.csv
+  - dim_resultado_antigeno.csv
+  - dim_resultado_lab.csv
+  - dim_resultado_pcr.csv
+  - dim_sector.csv
+  - dim_sexo.csv
+  - dim_tipo_paciente.csv
+  
