@@ -46,3 +46,33 @@ El proyecto muestra cómo estructurar, limpiar y documentar una base de datos ma
 | ├── data_dictionary.xlsx (Descripciones de información de la Base de Datos Silver)
 | ├── provenance.yaml
 | └── schema_documentation.xlsx (Descripciones de las tablas y enlaces del modelo estrella)
+
+-  Pasos para descargar la base de datos.
+
+## 🧩 Ejecución paso a paso
+
+### 1. Crear la base de datos 
+
+bash: createdb -U tu_usuario base_nueva
+
+### 2. Crea la estructura de las tablas 
+
+Ejecuta el script SQL silver_structure_database.sql
+
+bash: psql -U tu_usuario -d base_nueva -f silver_structure_database.sql
+
+### 3. Poblar las dimensiones
+
+Una vez creada la estructura, inserta las tablas maestras:
+
+bash: psql -U tu_usuario -d base_nueva -f silver_dimensiones.sql
+
+4. Poblar los datos históricos
+
+Opción A – Cargar muestra pequeña (para pruebas):
+
+Abrir el archivo bronze_to_silver_full.py y agregar path del archivo de muestra : "covid_sample_bronze_10k.csv"
+
+Opción B – Cargar datos completos (requiere el .sql de 13 GB descargado desde OneDrive):
+
+bash: psql -U tu_usuario -d base_nueva -f silver_historicos.sql
