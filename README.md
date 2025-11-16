@@ -1,11 +1,39 @@
 # 🦠 COVID Bronze-Silver Architecture
 
-Repositorio que demuestra una arquitectura **Bronze → Silver** para el manejo de datos epidemiológicos del sistema de vigilancia COVID-19 en México.  
-El proyecto muestra cómo estructurar, limpiar y documentar una base de datos masiva (65 millones de registros) de manera reproducible y trazable.
+Arquitectura reproducible para limpieza, normalización y modelado analítico de datos COVID-19 (México)
+
+Este repositorio demuestra una arquitectura Bronze → Silver diseñada para manejar datos epidemiológicos masivos (~65 millones de registros) provenientes de la Dirección General de Epidemiología (Gobierno de México).
+Incluye:
+
+- Datos crudos (muestra)
+- Datos Silver normalizados
+- Estructura SQL para reproducir la base completa
+- Script de transformación Bronze → Silver
+- Diagramas de linaje y diccionarios de datos
+- Dump SQL grande para cargas completas (vía OneDrive)
+
+## 📥 Solicitud de acceso al dataset completo (dump de 13 GB)
+
+Debido al tamaño y naturaleza de los datos (65M+ registros), la base de datos completa no puede alojarse directamente en GitHub.
+
+Para acceder al paquete completo que contiene:
+
+- silver_historicos.sql (dump de ~13 GB)
+
+- Archivos CSV completos de dimensiones
+
+- Documentación original del proveedor
+
+- Paquete Silver completo
+
+Puedes solicitar acceso mediante este enlace:
+
+👉 Formulario de solicitud de acceso
+https://docs.google.com/forms/d/e/1FAIpQLSew57U7NzttwuoXqmEUwoCdiUanNWXS6EmaicdqKrRaqiWdDA/viewform?usp=publish-editor
+
+## 📂 Estructura del repositorio
 
 ```
-
-## 📂 Estructura general
 covid-bronze-silver-architecture/
 │
 ├── README.md
@@ -62,6 +90,45 @@ covid-bronze-silver-architecture/
 
 ```
 
+# 🧩 Descripción del dataset
+
+Fuente oficial: Dirección General de Epidemiología – Gobierno de México
+https://www.gob.mx/salud/documentos/datos-abiertos-152140
+
+- Registros: ~65 millones
+- Año de cobertura: 2020–2025
+- Valores especiales incluidos por el proveedor
+
+Frecuencia de actualización: periódica según publicación oficial
+
+| Valor      | Significado                              |
+| ---------- | ---------------------------------------- |
+| 97         | No aplica                                |
+| 99         | Dato desconocido                         |
+| 997        | Sin información / no realizado           |
+| 9999-99-99 | Fecha inválida → convertida a 9999-12-31 |
+
+## 🏗️ Proceso Bronze → Silver
+### 🥉 Bronze
+
+- Datos crudos tal como se publican:
+- Columnas variables por periodo
+- Fechas inconsistentes
+- Tipos no normalizados
+- Códigos numéricos sin documentación contextual
+
+### 🥈 Silver
+
+Transformaciones aplicadas:
+
+- Tipificación y casting
+- Estandarización de fechas
+- Mapeo contra catálogos oficiales
+- Normalización a modelo estrella
+- Creación de dimensiones
+- Limpieza de valores sentinel
+- Eliminación de duplicados
+
 ## 🧩 Ejecución paso a paso
 
 ### 1️⃣ Crear la base de datos
@@ -98,11 +165,54 @@ Abrir el archivo bronze_to_silver_full.py y agregar path del archivo de muestra 
 psql -U tu_usuario -d base_nueva -f silver_historicos.sql
 ```
 
-🧾 Créditos y referencias
+## 📘 Metadatos incluidos
+✔ Diccionario de datos (data_dictionary.xlsx)
 
-```
-Fuente de datos: Dirección General de Epidemiología – Gobierno de México
-https://www.gob.mx/salud/documentos/datos-abiertos-152140
+- Tipos
+- Fuentes
+- Dominios
+- Descripción de cada atributo
+
+✔ Documentación de schema (schema_documentation.xlsx)
+
+- Mapeo de tablas
+- Llaves primarias y foráneas
+- Dependencias
+
+✔ Provenance (provenance.yaml)
+
+- Trazabilidad completa de:
+- versiones
+- hashes
+- fechas
+- fuentes
+
+## ⚖️ Consideraciones éticas
+
+- Datos oficiales, anónimos y públicos
+- Uso permitido: educativo, científico, analítico
+- No apto para diagnóstico clínico
+- Se siguen normas de manejo ético basadas en datos abiertos
+
+## 📚 Cómo citar este repositorio
+
+Gordillo Salinas, L.F. (2025).
+COVID Bronze–Silver Architecture: Ingesta, normalización y modelado analítico de datos COVID-19 (México).
+GitHub: https://github.com/Luis-gordillo/covid-bronze-silver-architecture
+
+Cita de la fuente de datos:
+Dirección General de Epidemiología – Gobierno de México.
+Datos Abiertos COVID-19. https://www.gob.mx/salud/documentos/datos-abiertos-152140
+
+🧾 Licencia
+
+Código: MIT
+
+Datos y documentación: CC BY 4.0
+
+👤 Autor y contacto
 
 Autor: Luis Francisco Gordillo Salinas
-```
+GitHub: https://github.com/Luis-gordillo
+
+Email: (agrega tu correo si quieres)
